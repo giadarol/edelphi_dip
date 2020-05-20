@@ -10,18 +10,20 @@ from scipy.signal import savgol_filter
 n_terms_to_be_kept = 200
 n_tail_cut = 20
 
+plane = 'y'
+
 # Load response data
-response_data_file = 'response_data.mat'
+response_data_file = f'response_data_{plane}.mat'
 ob_responses = mfm.myloadmat_to_obj(response_data_file)
 z_resp = ob_responses.z_slices
-x_resp_mat = ob_responses.x_mat
-x_resp_mat[np.isnan(x_resp_mat)] = 0.
-dpx_resp_mat = ob_responses.dpx_mat
-dpx_resp_mat[np.isnan(dpx_resp_mat)] = 0.
+r_resp_mat = ob_responses.r_mat
+r_resp_mat[np.isnan(r_resp_mat)] = 0.
+dpr_resp_mat = ob_responses.dpr_mat
+dpr_resp_mat[np.isnan(dpr_resp_mat)] = 0.
 
 # Combine all matrices together
-FF = x_resp_mat[:, :].T
-MM = dpx_resp_mat[:, :].T
+FF = r_resp_mat[:, :].T
+MM = dpr_resp_mat[:, :].T
 RR = np.dot(FF.T, FF)
 RR_inv = np.linalg.inv(RR)
 
@@ -56,12 +58,12 @@ for i_work in range(len(z_resp)):
 
 MM_cleaned = np.dot(WW_cleaned, FF)
 WW_check = np.dot(MM_cleaned, np.dot(CC, np.dot(RR_inv, np.dot(FF.T, CC_tails))))
-dpx_save = MM_cleaned.T
+dpr_save = MM_cleaned.T
 
 import scipy.io as sio
-sio.savemat('response_data_processed.mat', {
-    'dpx_mat': dpx_save,
-    'x_mat': x_resp_mat,
+sio.savemat(f'response_data_{plane}_processed.mat', {
+    'dpr_mat': dpr_save,
+    'r_mat': r_resp_mat,
     'z_slices': z_resp,
     'sin_ampl_list': ob_responses.sin_ampl_list,
     'cos_ampl_list': ob_responses.cos_ampl_list,

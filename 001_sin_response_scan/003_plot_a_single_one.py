@@ -7,9 +7,10 @@ from scipy.constants import e as qe
 import PyECLOUD.myfilemanager as mfm
 import PyECLOUD.mystyle as ms
 
-folder_sims = 'simulations'
-response_summary_file = './response_data_processed.mat'
-vmax_edens = 2.5e14
+plane = 'y'
+folder_sims = f'simulations_{plane}'
+response_summary_file = f'./response_data_{plane}_processed.mat'
+vmax_edens = 2.5e13
 
 i_plot_list = list(range(1,200))
 close_figures = True
@@ -26,6 +27,12 @@ for ii in i_plot_list:
 
     current_sim_ident= f'n_{n_osc:.1f}_c{cos_ampl:.2e}_s{sin_ampl:.2e}'
     ob = mfm.myloadmat_to_obj(folder_sims + '/' + current_sim_ident + '/response.mat')
+    if ob.plane=='x':
+        rg = ob.xg
+    elif ob.plane == 'y':
+        rg = ob.yg
+    else:
+        raise ValueError('What?!')
 
     #fig1 = plt.figure(100+ii)
     #ax1 = fig1.add_subplot(3,1,1)
@@ -54,13 +61,13 @@ for ii in i_plot_list:
     ax22 = fig2.add_axes((pos_col1, pos_row2, width_col1, height_row2),
             sharex=ax21)
 
-    mpbl = ax21.pcolormesh(1e2*ob.z_slices, 1e3*ob.xg, -(1/qe)*ob.rho_cut.T,
+    mpbl = ax21.pcolormesh(1e2*ob.z_slices, 1e3*rg, -(1/qe)*ob.rho_cut.T,
             vmin=0, vmax=vmax_edens)
     plt.colorbar(mpbl, cax=axcb)
-    ax21.plot(1e2*ob.z_slices, 1e3*ob.x_slices, 'k', lw=2)
-    ax22.plot(1e2*ob.z_slices, 1e6*obsum.dpx_mat[ii, :], lw=2)
+    ax21.plot(1e2*ob.z_slices, 1e3*ob.r_slices, 'k', lw=2)
+    ax22.plot(1e2*ob.z_slices, 1e6*obsum.dpr_mat[ii, :], lw=2)
     ax21.set_ylim(-2.5, 2.5)
-    ax22.set_ylim(1e6*np.nanmax(np.abs(obsum.dpx_mat[ii, :]))*np.array([-1.1, 1.1]))
+    ax22.set_ylim(1e6*np.nanmax(np.abs(obsum.dpr_mat[ii, :]))*np.array([-1.1, 1.1]))
     ax22.set_ylim(0.2*np.array([-1.1, 1.1]))
 
     ax21.set_ylabel('x [mm]')

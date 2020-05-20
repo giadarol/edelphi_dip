@@ -149,6 +149,7 @@ sio.savemat('response.mat',{
     'dpr_slices_all_clouds': dpr_slices_all_clouds,
     'xg': xg,
     'yg': yg,
+    'rg': rg,
     'rho_cut': rho_cut,
     })
 

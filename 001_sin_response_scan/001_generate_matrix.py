@@ -2,7 +2,8 @@ import PyECLOUD.myfilemanager as mfm
 
 import numpy as np
 
-folder_sims = 'simulations_y'
+plane = 'y'
+folder_sims = 'simulations_' + plane
 
 N_samples = 200
 ref_ampl = 1e-4
@@ -40,7 +41,7 @@ for ii in range(len(n_osc_list)):
 z_slices = ob.z_slices
 
 import scipy.io as sio
-sio.savemat('response_data.mat',{
+sio.savemat(f'response_data_{plane}.mat',{
     'r_mat': r_mat,
     'z_slices': z_slices,
     'dpr_mat': dpr_mat,

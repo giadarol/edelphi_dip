@@ -15,12 +15,14 @@ import sys
 sys.path.append('../')
 import response_matrix.response_matrix as rm
 
-test_data_file = './refsim_turn302.mat'
+test_data_file = './refsim_turn280.mat'
 #n_terms_list = range(1, 201, 2)
 n_terms_list = [6, 8, 10]
 n_tail_cut = 10
-response_data_file = '../001_sin_response_scan/response_data_processed.mat'
-z_strength_file = '../001a_sin_response_scan_unperturbed/linear_strength.mat'
+response_data_file = '../001_sin_response_scan/response_data_y.mat'
+z_strength_file = None
+#response_data_file = '../001_sin_response_scan/response_data_processed.mat'
+#z_strength_file = '../001a_sin_response_scan_unperturbed/linear_strength.mat'
 
 #test_data_file = './test_pulse.mat'
 #n_terms_list = [200]
@@ -63,12 +65,12 @@ slicer = sim_content.slicer
 
 # Get simulation data
 obsim = mfm.myloadmat_to_obj(test_data_file)
-x_test = obsim.x_slices
+plane = str(obsim.plane)
+r_test = obsim.r_slices
 int_test = obsim.int_slices
-x_test[np.isnan(x_test)] = 0.
+r_test[np.isnan(r_test)] = 0.
 xg = obsim.xg
 yg = obsim.yg
-
 
 plt.close('all')
 ms.mystyle_arial(fontsz=14, dist_tick_lab=5, traditional_look=False)
@@ -93,7 +95,7 @@ for ifig, n_terms_to_be_kept in enumerate(n_terms_list):
     respmat = rm.ResponseMatrix(
             slicer=slicer,
             response_data_file=response_data_file,
-            coord='x',
+            coord=plane,
             kick_factor=1./sim_content.n_segments,
             n_terms_to_be_kept=n_terms_to_be_kept,
             n_tail_cut=n_tail_cut)

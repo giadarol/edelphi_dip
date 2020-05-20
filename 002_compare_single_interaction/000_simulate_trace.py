@@ -147,8 +147,10 @@ sio.savemat(fname_out,{
     'z_slices': z_slices,
     'r_slices': r_slices,
     'dpr_slices': dpr_slices,
+    'int_slices': int_slices,
     'xg': xg,
     'yg': yg,
+    'rg': rg,
     'rho_cut': rho_cut,
     })
 

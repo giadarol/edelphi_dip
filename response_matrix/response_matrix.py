@@ -8,22 +8,19 @@ class ResponseMatrix(Element):
     def __init__(self, slicer=None, response_data_file=None, coord=None, kick_factor=1.,
             n_terms_to_be_kept=None, n_tail_cut=0):
 
-        if coord != 'x':
-            raise ValueError('Only x plane implemented for now!')
-
         ob_responses = mfm.myloadmat_to_obj(response_data_file)
 
         z_resp = ob_responses.z_slices
 
         # Clean-up NaNs
-        x_resp_mat = ob_responses.x_mat
-        x_resp_mat[np.isnan(x_resp_mat)] = 0.
-        dpx_resp_mat = ob_responses.dpx_mat
-        dpx_resp_mat[np.isnan(dpx_resp_mat)] = 0.
+        r_resp_mat = ob_responses.r_mat
+        r_resp_mat[np.isnan(r_resp_mat)] = 0.
+        dpr_resp_mat = ob_responses.dpr_mat
+        dpr_resp_mat[np.isnan(dpr_resp_mat)] = 0.
 
         # Prepare submatrices
-        FF = x_resp_mat[:, :].T    # base functions are in the columns
-        MM = dpx_resp_mat[:, :].T  # response to base functions are in the columns
+        FF = r_resp_mat[:, :].T    # base functions are in the columns
+        MM = dpr_resp_mat[:, :].T  # response to base functions are in the columns
         RR = np.dot(FF.T, FF)      # Matrix of cross products
         RR_inv = np.linalg.inv(RR) # Its inverse
 

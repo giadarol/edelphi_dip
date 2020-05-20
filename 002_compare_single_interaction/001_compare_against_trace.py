@@ -15,14 +15,15 @@ import sys
 sys.path.append('../')
 import response_matrix.response_matrix as rm
 
+plane = 'y'
 test_data_file = './refsim_turn280.mat'
 #n_terms_list = range(1, 201, 2)
 n_terms_list = [6, 8, 10]
 n_tail_cut = 10
 #response_data_file = '../001_sin_response_scan/response_data_y.mat'
 #z_strength_file = None
-response_data_file = '../001_sin_response_scan/response_data_y_processed.mat'
-z_strength_file = '../001a_sin_response_scan_unperturbed/linear_strength.mat'
+response_data_file = f'../001_sin_response_scan/response_data_{plane}_processed.mat'
+z_strength_file = f'../000a_sin_response_unperturbed_pinch/linear_strength_{plane}.mat'
 
 #test_data_file = './test_pulse.mat'
 #n_terms_list = [200]
@@ -65,7 +66,7 @@ slicer = sim_content.slicer
 
 # Get simulation data
 obsim = mfm.myloadmat_to_obj(test_data_file)
-plane = str(obsim.plane)
+assert(plane == str(obsim.plane))
 r_test = obsim.r_slices
 int_test = obsim.int_slices
 r_test[np.isnan(r_test)] = 0.
@@ -122,9 +123,12 @@ for ifig, n_terms_to_be_kept in enumerate(n_terms_list):
 
     # Apply detuning
     if z_strength_file is not None:
-        to_be_fixed
         obdet = mfm.myloadmat_to_obj(z_strength_file)
-        bunch.xp = bunch.xp + bunch.x * np.interp(bunch.z, obdet.z_slices,
+        if plane == 'x':
+            bunch.xp = bunch.xp + bunch.x * np.interp(bunch.z, obdet.z_slices,
+                obdet.k_z_integrated) / sim_content.n_segments
+        elif plane == 'y':
+            bunch.yp = bunch.yp + bunch.y * np.interp(bunch.z, obdet.z_slices,
                 obdet.k_z_integrated) / sim_content.n_segments
 
     # Measure kicks

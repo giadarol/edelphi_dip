@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 
 import PyECLOUD.myfilemanager as mfm
 
+plane = 'y'
+
 # Load response data
-ob = mfm.myloadmat_to_obj('response.mat')
+ob = mfm.myloadmat_to_obj(f'./response_dc_{plane}.mat')
 
 z_resp = ob.z_slices
 r_resp_mat = ob.r_ideal
@@ -17,7 +19,7 @@ dpr_resp_mat[np.isnan(dpr_resp_mat)] = 0.
 k_z = dpr_resp_mat/r_resp_mat
 
 import scipy.io as sio
-sio.savemat('linear_strength.mat', {
+sio.savemat(f'linear_strength_{plane}.mat', {
     'z_slices': z_resp,
     'k_z_integrated': k_z})
 plt.close('all')

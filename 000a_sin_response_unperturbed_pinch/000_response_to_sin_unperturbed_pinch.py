@@ -8,15 +8,16 @@ import PyPARIS.util as pu
 
 import PyECLOUD.myfilemanager as mfm
 
-# start-settings-section
-cos_amplitude = 2.00000000e-04
-sin_amplitude = 0.00000000e+00
-N_oscillations = 0.00000000e+00
 
 flag_no_bunch_charge = False
 flag_plots = True
 
 plane = 'y'
+
+cos_amplitude = 2.00000000e-04
+sin_amplitude = 0.00000000e+00
+N_oscillations = 0.00000000e+00
+fname_out = f'response_dc_{plane}.mat'
 
 sim_param_file = '../reference_simulation/Simulation_parameters.py'
 sim_param_amend_files = [
@@ -24,7 +25,6 @@ sim_param_amend_files = [
         'Simulation_parameters_amend_for_sin_response.py']
 
 field_map_file = '../003_generate_field_map/field_map.mat'
-# end-settings-section
 
 # Instantiate simulation
 sim_content = sim_mod.Simulation(param_file=sim_param_file)
@@ -141,7 +141,7 @@ elif plane == 'y':
 rho_cut = np.zeros((len(z_slices), len(rg)))
 
 
-sio.savemat('response.mat',{
+sio.savemat(fname_out,{
     'plane': plane,
     'z_slices': z_slices,
     'r_slices': r_slices,

@@ -28,13 +28,13 @@ colorlist = 'C0 C1 C2'.split()
 
 dict_plot = {
         'onlydip':{'fname':'../008_eigenvalues/eigenvalues.mat',
-            'mpsim_fname': './processed_data/compact_t1_fit.mat',
+            'mpsim_fname': None,
             'label': r'$\Delta$Q$_\Phi=$0, $\Delta$Q$_R=$0'},
-        'phase':{'fname':'../008a_scan_strength/eigenvalues.mat',
-            'mpsim_fname': './processed_data/compact_t2_fit.mat',
+        'phase':{'fname':'../008a_eigen_only_phase/eigenvalues.mat',
+            'mpsim_fname': None,
             'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R=$0'},
-        'wquad':{'fname':'../008a1_scan_strength_wlampldet/eigenvalues.mat',
-            'mpsim_fname': './processed_data/compact_t3_fit.mat',
+        'wquad':{'fname':'../008b_eigen_with_detuning/eigenvalues.mat',
+            'mpsim_fname': None,
             'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R\neq$0'},
         }
 

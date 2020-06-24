@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 
 import PyECLOUD.myfilemanager as mfm
 
-frac_tune_0 = .27
+frac_tune_0 = .295
 max_strength_plot = 0.9
 
-fname_pic = './processed_data/compact_pic_fit.mat'
-fname_vlasov_dipquad = '../008a1_scan_strength_wlampldet/eigenvalues.mat'
+fname_pic = './processed_data/compact_dip_pic_v_fit.mat'
+fname_vlasov_dipquad = '../008b_eigen_with_detuning/eigenvalues.mat'
 fname_vlasov_diponly = '../008_eigenvalues/eigenvalues.mat'
 
 obpic = mfm.myloadmat_to_obj(fname_pic)

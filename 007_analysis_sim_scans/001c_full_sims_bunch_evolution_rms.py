@@ -25,10 +25,30 @@ from scipy.constants import c as ccc
 
 flag_close_figffts = True
 T_rev = 88.9e-6
+L_bkt = 2.5e-9*ccc
 
+# # Comparison lengths
+# strength_list = np.arange(0.02, 1.08, 0.02)
+# labels = [f'strength {ss:.3f}' for ss in strength_list]
+# folders_compare = [
+#       #f'../005t1_dipolar_only/simulations_long/strength_{ss:.2e}/' for ss in strength_list]
+#       f'../005t2_dipolar_and_phase_shift/simulations_less_mps/strength_{ss:.2e}/' for ss in strength_list]
+#       #f'../005t3_dipolar_and_quadrupolar/simulations_less_mps/strength_{ss:.2e}/' for ss in strength_list]
+# fft2mod = 'lin'
+# flag_use_y = True
+# fname = 'compact_t2_v'
+# #fname = None
+# i_start_list = None
+# n_turns = len(strength_list)*[8000]
+# cmap = plt.cm.rainbow
+# i_force_line = 2 #None
+# fit_cut = 5000
+# flag_no_slice = False
+# flag_compact = True
 
-# Comparison strength
-strength_list = list(np.arange(10., 20.1, 1)) + list(np.arange(30, 61, 5))
+# Comparison lengths
+length_list = list(np.arange(10., 20.1, 1)) + list(np.arange(30, 61, 5))
+strength_list = np.array(length_list)/60.
 labels = [f'strength {ss:.3f}' for ss in strength_list]
 folders_compare = [
      ('/afs/cern.ch/project/spsecloud/Sim_PyPARIS_017'
@@ -37,10 +57,10 @@ folders_compare = [
       '12e11_Dt_ref_5ps_slice_500_MPsSlice_5e3_eMPs_1e6_'
       'scan_seg_8_16_length_10_60/simulations_PyPARIS/'
       f'Dt_ref_5ps_slice_500_MPsSlice_5e3_eMP_1e6_segment_8_length_{ss:.1f}')
-    for ss in strength_list]
+    for ss in length_list]
 fft2mod = 'lin'
-flag_use_y = False
-fname = 'compact_dip_pic_h'
+flag_use_y = True
+fname = 'compact_dip_pic_v'
 #fname = None
 i_start_list = None
 n_turns = len(strength_list)*[8000]
@@ -143,8 +163,8 @@ for ifol, folder in enumerate(folders_compare):
         ob.mean_x = ob.mean_y
         ob.mean_xp = ob.mean_yp
 
-        ob_slice.epsn_x = ob_slice.epsn_y
-        ob_slice.sigma_x = ob_slice.sigma_y
+        #ob_slice.epsn_x = ob_slice.epsn_y
+        #ob_slice.sigma_x = ob_slice.sigma_y
         ob_slice.mean_x = ob_slice.mean_y
         ob_slice.mean_xp = ob_slice.mean_yp
 
@@ -155,7 +175,7 @@ for ifol, folder in enumerate(folders_compare):
         wx = ob_slice.mean_x * w_slices / np.mean(w_slices)
         rms_x = np.sqrt(np.mean((ob_slice.mean_x * w_slices)**2, axis=0))
 
-    mask_zero = ob.epsn_x > 0.
+    mask_zero = (ob.epsn_x > 0.) & (ob.epsn_x < 2.8e-6)
     mask_zero[n_turns[ifol]:] = False
 
     if cmap is not None:
@@ -229,7 +249,8 @@ for ifol, folder in enumerate(folders_compare):
 
     # Details
     if not flag_no_slice:
-        L_zframe = np.max(ob_slice.mean_z[:, 0]) - np.min(ob_slice.mean_z[:, 0])
+        L_zframe = L_bkt
+        z_slices = np.linspace(-L_bkt/2, L_bkt/2, ob_slice.mean_x.shape[0])
         # I try some FFT on the slice motion
         ffts = np.fft.fft(wx, axis=0)
         n_osc_axis = np.arange(ffts.shape[0])*4*ob.sigma_z[0]/L_zframe
@@ -333,7 +354,7 @@ for ifol, folder in enumerate(folders_compare):
         for i_trace in range(i_start, i_start+N_traces):
             wx_trace_filtered = savgol_filter(wx[:,i_trace], 31, 3)
             mask_filled = ob_slice.n_macroparticles_per_slice[:,i_trace]>0
-            axtraces.plot(ob_slice.mean_z[mask_filled, i_trace],
+            axtraces.plot(z_slices[mask_filled],
                         wx_trace_filtered[mask_filled])
 
         axtraces.ticklabel_format(style='sci', scilimits=(0, 0), axis='y')

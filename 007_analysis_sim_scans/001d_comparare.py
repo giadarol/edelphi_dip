@@ -13,8 +13,8 @@ l_min = -6
 l_max = 4
 alpha_0 = -1.61237838e-03
 min_strength = 0
-max_strength = 60
-max_strength_tau_plot = 60
+max_strength = 1.1
+max_strength_tau_plot = 1.1
 tau_min = 0
 tau_max = 300
 flag_mode_0 = False
@@ -25,9 +25,10 @@ DQ_0 = -alpha_0 * beta_func/4/np.pi*factor_DQ0
 # Comparison for paper
 flag_mode_unstab = False
 dict_plot = {
-        't1':  {'fname':'./processed_data/compact_dip_pic_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'pic'},
-        #'t2': {'fname':'./processed_data/compact_t2_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t2'},
-        #'t3': {'fname':'./processed_data/compact_t3_fit.mat', 'tilt_lines':True, 'scale_x':1, 'label':'t3'},
+        #'pic':  {'fname':'./processed_data/compact_dip_pic_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'pic'},
+        't1':  {'fname':'./processed_data/compact_t1_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t1'},
+        't2':  {'fname':'./processed_data/compact_t2_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t2`'},
+        't3':  {'fname':'./processed_data/compact_t3_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t3'},
        }
 
 
@@ -38,8 +39,8 @@ dict_plot = {
 #          }
 
 colorlist = ['b', 'r', 'g', 'orange', 'k']
-colorlist = ['C3', 'g']
-colorlist = None
+#colorlist = ['C3', 'g']
+#colorlist = None
 
 
 
@@ -100,7 +101,7 @@ for ii, ll in enumerate(dict_plot.keys()):
         markeredgewidth=0, **kwargs)
     from scipy.signal import savgol_filter
     mask_plot = oo.strength_list < max_strength_tau_plot
-    smooth_gr = savgol_filter(oo.p_list_centroid[mask_plot]/T_rev, 7, 5)
+    smooth_gr = savgol_filter(oo.p_list_centroid[mask_plot]/T_rev, 31, 5)
     ax1.plot(oo.strength_list[mask_plot], smooth_gr,
             label=dict_plot[ll]['label'],
             linestyle='--', linewidth=3, **kwargs)

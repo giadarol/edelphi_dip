@@ -15,7 +15,7 @@ omega_s = 4.9e-3*omega0
 sigma_b = 0.097057
 vmax_edens = 1.5e14
 
-ob = mfm.myloadmat_to_obj('../001a_sin_response_scan_unperturbed/linear_strength.mat')
+ob = mfm.myloadmat_to_obj('../000a_sin_response_unperturbed_pinch/linear_strength_y.mat')
 z_slices = ob.z_slices
 p = np.polyfit(ob.z_slices, ob.k_z_integrated, deg=10)
 

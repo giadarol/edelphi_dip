@@ -83,11 +83,12 @@ ax101.legend(loc='lower center', ncol=1, fontsize='medium', frameon=False)
 fig100.subplots_adjust(bottom=.12)
 
 obmap = mfm.myloadmat_to_obj('../003_generate_field_map/rho_map_ec0.mat')
-iy_zero = np.argmin(np.abs(obmap.yg))
+ix_zero = np.argmin(np.abs(obmap.xg))
 
-mpbl = ax100.pcolormesh(1e2*obmap.zg, 1e3*obmap.xg,
-        -(1e-14/qe)*np.mean(obmap.rho[:,:,iy_zero-1: iy_zero+2], axis=2).T,
-        vmin=0, vmax=vmax_edens*1e-14)
+mpbl = ax100.pcolormesh(1e2*obmap.zg, 1e3*obmap.yg,
+        -(1e-14/qe)*np.mean(obmap.rho[:,ix_zero-1: ix_zero+2, :], axis=1).T,
+        )
+        #vmin=0, vmax=vmax_edens*1e-14)
 ax100.set_ylim(-4.5, 4.5)
 ax100.set_ylabel('x [mm]')
 

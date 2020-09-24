@@ -46,21 +46,19 @@ L_bkt = 2.5e-9*ccc
 # flag_no_slice = False
 # flag_compact = True
 
-# Comparison lengths
-length_list = list(np.arange(10., 20.1, 1)) + list(np.arange(30, 61, 5))
-strength_list = np.array(length_list)/60.
+
+# Finer PIC scan
+strength_list = np.arange(0.02, 1.51, 0.02) 
 labels = [f'strength {ss:.3f}' for ss in strength_list]
 folders_compare = [
-     ('/afs/cern.ch/project/spsecloud/Sim_PyPARIS_017'
-      '/inj_dipole_sey_1.4_intensity_'
-      '1.2e11ppb_VRF_6MV_yes_initial_kick_intial_edensity_'
-      '12e11_Dt_ref_5ps_slice_500_MPsSlice_5e3_eMPs_1e6_'
-      'scan_seg_8_16_length_10_60/simulations_PyPARIS/'
-      f'Dt_ref_5ps_slice_500_MPsSlice_5e3_eMP_1e6_segment_8_length_{ss:.1f}')
-    for ss in length_list]
+     ('/afs/cern.ch/project/spsecloud/Sim_PyPARIS_018/'
+      'inj_dipole_y_sey_1.4_1.2e11ppb_VRF_6_MV_no_initial'
+      '_kick_edensity_12e11_length_factor_0.02_1.5/'
+      f'simulations_PyPARIS/strength_length_{ss:.2f}')
+    for ss in strength_list]
 fft2mod = 'lin'
 flag_use_y = True
-fname = 'compact_dip_pic_v'
+fname = 'compact_dip_pic_fine_v'
 #fname = None
 i_start_list = None
 n_turns = len(strength_list)*[8000]
@@ -69,6 +67,31 @@ i_force_line = 2 #None
 fit_cut = 5000
 flag_no_slice = False
 flag_compact = True
+
+
+# # Comparison lengths
+# length_list = list(np.arange(10., 20.1, 1)) + list(np.arange(30, 61, 5))
+# strength_list = np.array(length_list)/60.
+# labels = [f'strength {ss:.3f}' for ss in strength_list]
+# folders_compare = [
+#      ('/afs/cern.ch/project/spsecloud/Sim_PyPARIS_017'
+#       '/inj_dipole_sey_1.4_intensity_'
+#       '1.2e11ppb_VRF_6MV_yes_initial_kick_intial_edensity_'
+#       '12e11_Dt_ref_5ps_slice_500_MPsSlice_5e3_eMPs_1e6_'
+#       'scan_seg_8_16_length_10_60/simulations_PyPARIS/'
+#       f'Dt_ref_5ps_slice_500_MPsSlice_5e3_eMP_1e6_segment_8_length_{ss:.1f}')
+#     for ss in length_list]
+# fft2mod = 'lin'
+# flag_use_y = True
+# fname = 'compact_dip_pic_v'
+# #fname = None
+# i_start_list = None
+# n_turns = len(strength_list)*[8000]
+# cmap = plt.cm.rainbow
+# i_force_line = 2 #None
+# fit_cut = 5000
+# flag_no_slice = False
+# flag_compact = True
 #######################################################################
 
 flag_naff = True

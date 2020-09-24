@@ -23,12 +23,12 @@ DQ_0 = -alpha_0 * beta_func/4/np.pi*factor_DQ0
 
 
 # Comparison for paper
-flag_mode_unstab = False
+flag_mode_unstab = True
 dict_plot = {
-        #'pic':  {'fname':'./processed_data/compact_dip_pic_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'pic'},
-        't1':  {'fname':'./processed_data/compact_t1_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t1'},
-        't2':  {'fname':'./processed_data/compact_t2_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t2`'},
-        't3':  {'fname':'./processed_data/compact_t3_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t3'},
+        'pic':  {'fname':'./processed_data/compact_dip_pic_fine_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'pic', 'insta_thresh': .6},
+#        't1':  {'fname':'./processed_data/compact_t1_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t1'},
+#        't2':  {'fname':'./processed_data/compact_t2_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t2`'},
+        't3':  {'fname':'./processed_data/compact_t3_v_fit.mat', 'tilt_lines':False, 'scale_x':1, 'label':'t3', 'insta_thresh': .6},
        }
 
 

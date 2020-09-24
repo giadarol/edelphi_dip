@@ -18,7 +18,7 @@ import response_matrix.response_matrix as rm
 plane = 'y'
 test_data_file = './refsim_turn280.mat'
 #n_terms_list = range(1, 201, 2)
-n_terms_list = [6, 8, 10]
+n_terms_list = [6, 8, 10, 16, 21, 51, 101]
 n_tail_cut = 10
 #response_data_file = '../001_sin_response_scan/response_data_y.mat'
 #z_strength_file = None

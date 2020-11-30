@@ -26,14 +26,20 @@ colorlist = None
 colorlist = 'C0 C1 C2'.split()
 
 
+# dict_plot = {
+#         'onlydip':{'fname':'../008_eigenvalues/eigenvalues.mat',
+#             'mpsim_fname': None,
+#             'label': r'$\Delta$Q$_\Phi=$0, $\Delta$Q$_R=$0'},
+#         'phase':{'fname':'../008a_eigen_only_phase/eigenvalues.mat',
+#             'mpsim_fname': None,
+#             'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R=$0'},
+#         'wquad':{'fname':'../008b_eigen_with_detuning/eigenvalues.mat',
+#             'mpsim_fname': None,
+#             'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R\neq$0'},
+#         }
+
 dict_plot = {
-        'onlydip':{'fname':'../008_eigenvalues/eigenvalues.mat',
-            'mpsim_fname': None,
-            'label': r'$\Delta$Q$_\Phi=$0, $\Delta$Q$_R=$0'},
-        'phase':{'fname':'../008a_eigen_only_phase/eigenvalues.mat',
-            'mpsim_fname': None,
-            'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R=$0'},
-        'wquad':{'fname':'../008b_eigen_with_detuning/eigenvalues.mat',
+        'wquad':{'fname':'../008c_eigen_with_detuning_fine/eigenvalues.mat',
             'mpsim_fname': None,
             'label': r'$\Delta$Q$_\Phi\neq$0, $\Delta$Q$_R\neq$0'},
         }
